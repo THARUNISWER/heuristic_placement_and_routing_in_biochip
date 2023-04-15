@@ -6,14 +6,15 @@ class Row:
     id = 0
     place = []
     frag = []
-    ROW_SIZE = 10
+    row_size = 10
     tot_space = 10
 
-    def __init__(self, id: int):
+    def __init__(self, id: int, size: int):
         self.id = id
         self.place = []
-        self.frag = [{"st_position": 0, "end_position": self.ROW_SIZE, "area": self.ROW_SIZE}]
-        self.tot_space = self.ROW_SIZE
+        self.row_size = size
+        self.frag = [{"st_position": 0, "end_position": self.row_size, "area": self.row_size}]
+        self.tot_space = self.row_size
 
     def search(self, V):
         first = 0
@@ -34,7 +35,7 @@ class Row:
         return [ans, self.frag[ans]["area"]]
 
     def compact(self):
-        self.frag = [{"st_position": self.ROW_SIZE - self.tot_space, "end_position": self.ROW_SIZE, "area": self.ROW_SIZE}]
+        self.frag = [{"st_position": self.row_size - self.tot_space, "end_position": self.row_size, "area": self.row_size}]
 
         curr_pos = 0
         for i in range(0, len(self.place)):
@@ -45,16 +46,18 @@ class Row:
 
             curr_pos = self.place[i]["end_position"]
 
-    def delete(self, module_id):
+    def delete(self, oper):
         module = None
+        st_pos = None
         for index in range(len(self.place)):
-            if self.place[index]['module_id'] == module_id:
+            if self.place[index]['module_id'] == oper:
                 module = self.place[index]
+                st_pos = self.place[index]["st_position"]
                 del self.place[index]
                 break
 
         if module is None:
-            return 0
+            return -1
 
         self.tot_space += module["end_position"] - module["st_position"]
         for ind in range(len(self.frag)):
@@ -78,15 +81,15 @@ class Row:
                 ind = i
                 break
         self.frag.insert(ind, module)
-        return 1
+        return st_pos
 
-    def insert(self, module_id, V, frag_id):
+    def insert(self, oper, V, frag_id):
         if self.frag[frag_id]["st_position"] + V > self.frag[frag_id]["end_position"]:
             print("Invalid insertion")
-            return
+            return -1
 
         self.tot_space -= V
-        new_mod = {"module_id": module_id, "st_position": self.frag[frag_id]["st_position"], "end_position": self.frag[frag_id]["st_position"] + V}
+        new_mod = {"module_id": oper, "st_position": self.frag[frag_id]["st_position"], "end_position": self.frag[frag_id]["st_position"] + V}
         frag_mod = self.frag[frag_id]
         del self.frag[frag_id]
         if frag_mod["end_position"] != new_mod["end_position"]:
@@ -105,6 +108,7 @@ class Row:
                 ind = i
                 break
         self.place.insert(ind, new_mod)
+        return new_mod["st_position"]
 
     def generate_module_image(self):
         print(self.frag)
