@@ -1,13 +1,5 @@
-import bisect
-from PIL import Image, ImageDraw, ImageFont
-import random
 
 class Row:
-    id = 0
-    place = []
-    frag = []
-    row_size = 10
-    tot_space = 10
 
     def __init__(self, id: int, size: int):
         self.id = id
@@ -16,6 +8,7 @@ class Row:
         self.frag = [{"st_position": 0, "end_position": self.row_size, "area": self.row_size}]
         self.tot_space = self.row_size
 
+    # runs binary search to find best fit space in each row
     def search(self, V):
         first = 0
         last = len(self.frag) - 1
@@ -110,39 +103,7 @@ class Row:
         self.place.insert(ind, new_mod)
         return new_mod["st_position"]
 
-    def generate_module_image(self):
-        print(self.frag)
-        print(self.place)
-        # Calculate the width and height of the image based on the start and end positions
-        width = 100
-        height = 2
-
-        # Create a new image object with the calculated size
-        im = Image.new('RGB', (width, height), )
-
-        draw = ImageDraw.Draw(im)
-
-        # Define a font for the module ids
-        font = ImageFont.truetype("arial.ttf", 18)
-
-        # Loop through each module in the list and assign a unique color to it
-        for module in self.place:
-            start_pos = module['st_position']
-            end_pos = module['end_position']
-            color = tuple(random.sample(range(256), 4))  # convert color values from [0,1] range to [0,255]
-
-            # Set the color of the pixels for the current module
-            for i in range(start_pos, end_pos):
-                print(color)
-                im.putpixel((i, 0), color)
-                im.putpixel((i, 1), color)
-
-            module_id = str(module['module_id'])
-            text_width, text_height = draw.textsize(module_id, font=font)
-            text_x = (start_pos + end_pos) // 2 - text_width // 2
-            text_y = 1
-            draw.text((text_x, text_y), module_id, font=font, fill=(0, 0, 0))
-
-        # Save the image to a file
-        im.save('module_image.jpg')
+    def display(self):
+        print(str(self.id) + " row_frag: " + str(self.frag))
+        print(str(self.id) + " row_place: " + str(self.place))
 

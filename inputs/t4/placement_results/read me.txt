@@ -1,0 +1,3 @@
+example.csv:::for t1 operation o_3, o_5 and o_6 are placed on chip.
+
+grid with 5 rows each of width 40
