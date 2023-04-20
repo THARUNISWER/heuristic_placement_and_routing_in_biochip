@@ -5,6 +5,7 @@ from PIL import Image, ImageDraw
 
 class Visuals:
     symbol_colors = {}
+    csv_symbols = {}
 
     def __init__(self, csv_symbol):
         # Define symbol-color mappings
@@ -16,7 +17,7 @@ class Visuals:
             csv_symbol['reservoir']: "#2aa16f",  # Moss green
             csv_symbol['waste_reservoir']: "#543b0b"  # brown
         }
-        self.const_symbols = csv_symbol.values()
+        self.csv_symbols = csv_symbol
 
     def visualize(self, file_path, output_path):
 
@@ -51,36 +52,58 @@ class Visuals:
                 x = col * square_size
                 y = row * square_size
 
-                # Check if the symbol has a fixed color
                 if symbol in self.symbol_colors:
+                    # standard symbols
                     color = self.symbol_colors[symbol]
-                elif symbol[0] == 'R' or symbol[0] == 'D':
+                elif symbol[0] == self.csv_symbols['reservoir'] or symbol[0] == self.csv_symbols['waste_reservoir']:
+                    # reservoir and waste_reservoir
                     color = self.symbol_colors[symbol[0]]
-                else:
-                    # Assign a random color to the symbol
+                elif symbol[0] == self.csv_symbols['operation']:
+                    # normal operation
                     while True:
                         color = "#{:06x}".format(random.randint(0, 0xFFFFFF))
-                        if color not in self.symbol_colors.values():
+                        sum = int(color[1:3], 16) + int(color[3:5], 16) + int(color[5:7], 16)
+                        avg = sum / 3
+                        if color not in self.symbol_colors.values() and (96 < avg < 196):
                             break
                     self.symbol_colors[symbol] = color
 
-                # Draw the square with the assigned color
-                grid_draw.rectangle((x, y, x + square_size, y + square_size), fill=color, outline="#000000")
+                else:
+                    # its a storage operation
+                    # assume module is already present in a row
+                    symbol = tuple(map(str, symbol[1:len(symbol)-1].split(', ')))
+                    if symbol[0] == 'G':
+                        color = self.symbol_colors[symbol[0]]
+                        grid_draw.rectangle((x, y, x + square_size, y + square_size), fill=color, outline="#000000")
+                        continue
+                    if symbol[1] not in self.symbol_colors.keys():
+                        print("Storage module " + str(symbol) + " not present in any row")
+                        continue
+                    color = self.symbol_colors[symbol[1]]
 
-                if symbol not in self.const_symbols:
-                    # Calculate the center position of the square
                     center_x = x + (square_size // 2)
                     center_y = y + (square_size // 2)
+                    text_width, text_height = grid_draw.textsize(symbol[0])
+                    x_offset = (square_size - text_width) // 2
+                    y_offset = (square_size - text_height) // 2
+                    text_x = center_x - (text_width // 2) + x_offset
+                    text_y = center_y - (text_height // 2) + y_offset
+                    grid_draw.rectangle((x, y, x + square_size, y + square_size), fill=color, outline="#000000")
+                    grid_draw.text((text_x, text_y), symbol[0], fill="#000000")
+                    continue
 
-                    # Calculate the x and y offsets for the text
+                if symbol[0] in list(self.csv_symbols[key] for key in ['operation', 'reservoir', 'waste_reservoir']):
+                    center_x = x + (square_size // 2)
+                    center_y = y + (square_size // 2)
                     text_width, text_height = grid_draw.textsize(symbol)
                     x_offset = (square_size - text_width) // 2
                     y_offset = (square_size - text_height) // 2
-
-                    # Draw the symbol character within the square
                     text_x = center_x - (text_width // 2) + x_offset
                     text_y = center_y - (text_height // 2) + y_offset
+                    grid_draw.rectangle((x, y, x + square_size, y + square_size), fill=color, outline="#000000")
                     grid_draw.text((text_x, text_y), symbol, fill="#000000")
+                    continue
 
-        # Save the grid image as a JPEG file
+                grid_draw.rectangle((x, y, x + square_size, y + square_size), fill=color, outline="#000000")
+
         grid_image.save(output_path)

@@ -97,12 +97,12 @@ while True:
     if str(cur_time) in curr_data.keys():
         temp_st = {}
         for x in curr_data[str(cur_time)]:
-            stat = N.delete((x[0], x[no_of_op + 1]), int(x[no_of_op + 4]))
+            stat = N.delete((x[0], x[0]), int(x[no_of_op + 4]))
             temp_st[str(x[0])] = (stat, x[no_of_op], x[no_of_op + 1])
 
         del curr_data[str(cur_time)]
         while stor_pos < len(stor_data) and str(stor_data[stor_pos][1]) in temp_st.keys():
-            store_row_id = N.storage(temp_st[str(stor_data[stor_pos][1])][0], 2*int(stor_data[stor_pos][3]), (stor_data[stor_pos][0], temp_st[str(stor_data[stor_pos][1])][2]))
+            store_row_id = N.storage(temp_st[str(stor_data[stor_pos][1])][0], 2*int(stor_data[stor_pos][3]), (stor_data[stor_pos][0], stor_data[stor_pos][1]))
             if store_row_id == -1:
                 print("Shifting time due to lack of storage..")
                 time_shift(2)
@@ -122,7 +122,7 @@ while True:
 
     # insertion in rows and removal of storage
     while curr_pos < len(data) and str(data[curr_pos][no_of_op + 2]) == str(cur_time):
-        stat = N.insert((data[curr_pos][0], data[curr_pos][no_of_op + 1]), 2*int(data[curr_pos][no_of_op]))  # take care on module size
+        stat = N.insert((data[curr_pos][0], data[curr_pos][0]), 2*int(data[curr_pos][no_of_op]))  # take care on module size
         if stat == -2:
             print("Stopping placement..")
             sys.exit(0)
@@ -143,7 +143,7 @@ while True:
 
         if str(data[curr_pos][0]) in curr_store_data.keys():
             for x in curr_store_data[str(data[curr_pos][0])]:
-                st = N.del_store(stat, (x[0], x[8]), int(x[6]), x[3])
+                st = N.del_store(stat, (x[0], x[1]), int(x[6]), x[3])
                 if st == 0:
                     print("Invalid module id: " + str((x[0], x[7])) + " storage number: " + str(x[6]))
                     sys.exit()

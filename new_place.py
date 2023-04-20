@@ -17,7 +17,8 @@ class NewPlace:
         'row': 'M',
         'storage': 'S',
         'reservoir': 'D',
-        'waste_reservoir': 'W'
+        'waste_reservoir': 'W',
+        'operation': 'O'
     }
     V = Visuals(csv_symbols)
 
@@ -50,14 +51,14 @@ class NewPlace:
         best_fit = None
         min_space = None
         for id in range(self.N):
-            ans = self.rows[id].search(V)
+            ans = self.rows[id].search(V + 2)
             if ans[0] != -1:
                 if best_fit is None:
                     best_fit = [id, ans]
                 else:
                     best_fit = minimum(best_fit, [id, ans])
 
-            if self.rows[id].tot_space >= V:
+            if self.rows[id].tot_space >= V + 2:
                 if min_space is None:
                     min_space = [id, self.rows[id].tot_space]
                 else:
@@ -66,7 +67,7 @@ class NewPlace:
 
         if best_fit is None:
             if min_space is None:
-                if V > self.ROW_SIZE:
+                if V + 2 > self.ROW_SIZE:
                     print("Module: " + str(oper) + " is too big to fit in any row")
                     return -2
                 print(
@@ -74,7 +75,7 @@ class NewPlace:
                 return -1
             else:
                 self.rows[min_space[0]].compact()
-                ans = self.rows[min_space[0]].search(V)
+                ans = self.rows[min_space[0]].search(V + 2)
                 best_fit = [min_space[0], ans]
 
         st_pos = self.rows[best_fit[0]].insert(oper, V, best_fit[1][0])
@@ -83,7 +84,8 @@ class NewPlace:
 
     def delete(self, oper, row_id):
         st_pos = self.rows[row_id].delete(oper)
-
+        pad = (self.csv_symbols['guard_ring'], oper[0])
+        self.rows[row_id].delete(pad)
         if st_pos == -1:
             print("Invalid module id")
             return 0
@@ -95,14 +97,14 @@ class NewPlace:
         best_fit = None
         min_space = None
         for id in range(0, 1):
-            ans = self.store[id].search(V_s)
+            ans = self.store[id].search(V_s + 2)
             if ans[0] != -1:
                 if best_fit is None:
                     best_fit = [id, ans]
                 else:
                     best_fit = minimum(best_fit, [id, ans])
 
-            if self.store[id].tot_space >= V_s:
+            if self.store[id].tot_space >= V_s + 2:
                 if min_space is None:
                     min_space = [id, self.store[id].tot_space]
                 else:
@@ -115,7 +117,7 @@ class NewPlace:
                 return -1
             else:
                 self.store[min_space[0]].compact()
-                ans = self.store[min_space[0]].search(V_s)
+                ans = self.store[min_space[0]].search(V_s + 2)
                 best_fit = [min_space[0], ans]
 
         st_pos = self.store[best_fit[0]].insert(stor_mod_id, V_s, best_fit[1][0])
@@ -127,7 +129,8 @@ class NewPlace:
 
     def del_store(self, mod_pos, stor_mod_id, stor_row, V_d):
         st_pos = self.store[stor_row].delete(stor_mod_id)
-
+        pad = (self.csv_symbols['guard_ring'], stor_mod_id[0])
+        self.store[stor_row].delete(pad)
         if st_pos == -1:
             print("Invalid module id")
             return 0
@@ -170,7 +173,7 @@ class NewPlace:
             list_row[self.ROW_WIDTH + 7] = self.csv_symbols['guard_ring']
             for x in row.place:
                 for i in range(self.ROW_WIDTH + 8 + int(x['st_position']), self.ROW_WIDTH + 8 + int(x['end_position'])):
-                    list_row[i] = x['module_id'][1]
+                    list_row[i] = x['module_id'][0]
             list_row[self.ROW_WIDTH + self.ROW_SIZE + 8] = self.csv_symbols['guard_ring']
             list_row[self.ROW_WIDTH + self.ROW_SIZE + 9] = self.csv_symbols['guard_ring']
 
@@ -195,7 +198,8 @@ class NewPlace:
         for x in self.store[0].place:
             for i in range(int(x['st_position']), int(x['end_position'])):
                 for k in range(self.ROW_WIDTH):
-                    place_list[i][k] = x['module_id'][1]
+                    s = '(' + ', '.join(x['module_id']) + ')'
+                    place_list[i][k] = s
                 for k in range(self.ROW_WIDTH, self.ROW_WIDTH + 2):
                     place_list[i][k] = self.csv_symbols['guard_ring']
                 for k in range(self.ROW_WIDTH + 2, self.ROW_WIDTH + 6):
@@ -214,7 +218,8 @@ class NewPlace:
             offset = self.ROW_WIDTH + 8 + self.ROW_SIZE
             for i in range(int(x['st_position']), int(x['end_position'])):
                 for k in range(offset + 8, offset + 8 + self.ROW_WIDTH):
-                    place_list[i][k] = x['module_id'][1]
+                    s = '(' + ', '.join(x['module_id']) + ')'
+                    place_list[i][k] = s
                 for k in range(offset + 6, offset + 8):
                     place_list[i][k] = self.csv_symbols['guard_ring']
                 for k in range(offset + 2, offset + 6):

@@ -77,16 +77,18 @@ class Row:
         return st_pos
 
     def insert(self, oper, V, frag_id):
-        if self.frag[frag_id]["st_position"] + V > self.frag[frag_id]["end_position"]:
+        # padding
+        if self.frag[frag_id]["st_position"] + V + 2 > self.frag[frag_id]["end_position"]:
             print("Invalid insertion")
             return -1
 
-        self.tot_space -= V
+        self.tot_space -= (V + 2)
         new_mod = {"module_id": oper, "st_position": self.frag[frag_id]["st_position"], "end_position": self.frag[frag_id]["st_position"] + V}
+        pad_mod = {"module_id": ('G', oper[0]), "st_position": self.frag[frag_id]["st_position"] + V, "end_position": self.frag[frag_id]["st_position"] + V + 2}
         frag_mod = self.frag[frag_id]
         del self.frag[frag_id]
-        if frag_mod["end_position"] != new_mod["end_position"]:
-            frag_mod["st_position"] = new_mod["end_position"]
+        if frag_mod["end_position"] != pad_mod["end_position"]:
+            frag_mod["st_position"] = pad_mod["end_position"]
             frag_mod["area"] = frag_mod["end_position"] - frag_mod["st_position"]
             ind = len(self.frag)
             for i in range(0, len(self.frag)):
@@ -101,6 +103,7 @@ class Row:
                 ind = i
                 break
         self.place.insert(ind, new_mod)
+        self.place.insert(ind + V, pad_mod)
         return new_mod["st_position"]
 
     def display(self):
