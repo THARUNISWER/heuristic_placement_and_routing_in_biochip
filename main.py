@@ -5,17 +5,17 @@ import shutil
 import sys
 
 # path names
-datafile_path = "./inputs/t3/scheduled_csv_files/t3_asap.csv"
-storage_file_path = "./inputs/t3/storage_csv_files/t3_ASAP_storage.csv"
+datafile_path = "./inputs/t1/scheduled_csv_files/t1_asap.csv"
+storage_file_path = "./inputs/t1/storage_csv_files/t1_ASAP_storage.csv"
 modified_datafile_path = "mod_input_dag.csv"
 modified_storage_path = "mod_input_store.csv"
 output_csv_dir = "./placement"
 output_jpg_dir = "./placement_jpg"
 
 # input parameters
-no_of_rows = 4
+no_of_rows = 2
 row_width = 4
-row_size = 20  # min row size must be 6 to accommodate 6 reservoirs and 2 waste reservoirs
+row_size = 22  # min row size must be 6 to accommodate 6 reservoirs and 2 waste reservoirs
 
 # making directories and files ready for processing
 if os.path.isdir(output_csv_dir):
@@ -35,19 +35,21 @@ for d in ini_data:
         data.append(d)
 no_of_op = len(data) + 1
 if storage_file_path == "":
+    s_data = []
     stor_data = []
 else:
-    stor_data = list(csv.reader(open(storage_file_path)))
-    stor_data[0].append('R_id')
-    stor_data[0].append('pos')
-    stor_data[0].append('M_id')
-    for i in range(1, len(stor_data)):
-        stor_data[i].append('-')
-        stor_data[i].append('-')
-        stor_data[i].append('-')
+    s_data = list(csv.reader(open(storage_file_path)))
+    s_data[0].append('R_id')
+    s_data[0].append('pos')
+    s_data[0].append('M_id')
+    for i in range(1, len(s_data)):
+        s_data[i].append('-')
+        s_data[i].append('-')
+        s_data[i].append('-')
+    stor_data = s_data[1:]
 
 data = sorted(data, key=lambda x: int(x[no_of_op + 2]))
-
+stor_data = sorted(stor_data, key=lambda x: int(x[4]))
 
 # Heuristic Placement processing begins
 # Variable declarations
@@ -168,4 +170,6 @@ with open(modified_datafile_path, "w+", newline="") as f:
 
 with open(modified_storage_path, "w+", newline="") as f:
     writer = csv.writer(f)
+    if storage_file_path != "":
+        stor_data.insert(0, s_data[0])
     writer.writerows(stor_data)

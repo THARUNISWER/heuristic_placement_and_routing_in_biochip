@@ -1,0 +1,28 @@
+"(S_2, O_3)","(S_2, O_3)","(S_2, O_3)","(S_2, O_3)",G,G,R,R,D1,D1,R,R,D2,D2,R,R,D3,D3,R,R,W1,W1,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,G,G,S,S,S,S
+"(S_2, O_3)","(S_2, O_3)","(S_2, O_3)","(S_2, O_3)",G,G,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,G,G,S,S,S,S
+"(S_2, O_3)","(S_2, O_3)","(S_2, O_3)","(S_2, O_3)",G,G,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,G,G,S,S,S,S
+"(S_2, O_3)","(S_2, O_3)","(S_2, O_3)","(S_2, O_3)",G,G,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,G,G,S,S,S,S
+"(S_2, O_3)","(S_2, O_3)","(S_2, O_3)","(S_2, O_3)",G,G,R,R,R,R,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,R,R,R,R,G,G,S,S,S,S
+"(S_2, O_3)","(S_2, O_3)","(S_2, O_3)","(S_2, O_3)",G,G,R,R,R,R,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,R,R,R,R,G,G,S,S,S,S
+"(G, S_2)","(G, S_2)","(G, S_2)","(G, S_2)",G,G,R,R,R,R,G,G,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,G,G,R,R,R,R,G,G,S,S,S,S
+"(G, S_2)","(G, S_2)","(G, S_2)","(G, S_2)",G,G,R,R,R,R,G,G,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,G,G,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,G,G,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,G,G,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,G,G,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,G,G,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,G,G,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,G,G,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,G,G,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,G,G,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,G,G,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,G,G,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,G,G,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,G,G,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,G,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,G,G,S,S,S,S
+S,S,S,S,G,G,R,R,D4,D4,R,R,D5,D5,R,R,D6,D6,R,R,W2,W2,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,R,G,G,S,S,S,S
